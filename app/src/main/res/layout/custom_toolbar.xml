@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:layout_margin="@dimen/space_8dp"
+    app:layout_collapseMode="pin"
+    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:minHeight="@dimen/space_20dp"
+            android:padding="@dimen/space_8dp"
+            android:minWidth="@dimen/space_20dp"
+            android:src="@android:drawable/star_off"
+            android:tint="@color/white" />
+
+        <ImageView
+            android:padding="@dimen/space_8dp"
+            android:id="@+id/img_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/space_8dp"
+            android:layout_toStartOf="@+id/img_fav"
+            app:srcCompat="@drawable/ic_share" />
+
+        <ImageView
+            android:padding="@dimen/space_8dp"
+            android:id="@+id/img_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_exit" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.Toolbar>

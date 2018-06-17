@@ -26,6 +26,9 @@ public class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ReplyHol
         this.context = context;
         this.repliesList = repliesList;
     }
+    RepliesAdapter(Context context) {
+        this.context = context;
+    }
 
     @Override
     public ReplyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,15 +40,16 @@ public class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ReplyHol
     @Override
     public void onBindViewHolder(ReplyHolder holder, int position) {
 
-        replieObject = repliesList.get(position);
+        /*replieObject = repliesList.get(position);
         holder.txt_reply_author.setText(replieObject.getReplyAuthor());
         Picasso.with(context).load(replieObject.getImg_author_url()).into(holder.img_reply_author);
-        holder.txt_reply_content.setText(replieObject.getReplyAuthorReply());
+        holder.txt_reply_content.setText(replieObject.getReplyAuthorReply());*/
     }
 
     @Override
     public int getItemCount() {
-        return repliesList.size();
+        return 3;
+        //return repliesList.size();
     }
 
 

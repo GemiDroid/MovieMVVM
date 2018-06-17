@@ -1,11 +1,6 @@
-package com.gemi_droid.intcoretask.data.network.repository;
-
-import android.content.Context;
-
-import com.gemi_droid.intcoretask.R;
+package com.gemi_droid.intcoretask.data.network.retrofit;
 
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -15,10 +10,10 @@ public class RetrofitRepository {
 
     Retrofit retrofit;
 
-    public Retrofit getRetrofit(Context context) {
+    public Retrofit getRetrofit(String url) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(context.getString(R.string.base_url))
+                    .baseUrl(url)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getOKHTTPClient())
                     .build();
@@ -38,7 +33,5 @@ public class RetrofitRepository {
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .build();
         return client;
-
-
     }
 }

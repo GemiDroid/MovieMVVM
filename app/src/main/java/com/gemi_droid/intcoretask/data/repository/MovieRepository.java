@@ -1,15 +1,20 @@
 package com.gemi_droid.intcoretask.data.repository;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
+
 import com.gemi_droid.intcoretask.data.local.db.moviesDB;
 import com.gemi_droid.intcoretask.data.network.manager.CommentManager;
 import com.gemi_droid.intcoretask.data.network.manager.PostersManager;
 import com.gemi_droid.intcoretask.data.network.manager.RepliesManager;
 import com.gemi_droid.intcoretask.data.network.models.Comments;
-import com.gemi_droid.intcoretask.data.network.models.Posters;
+import com.gemi_droid.intcoretask.data.network.models.PosterResults;
 import com.gemi_droid.intcoretask.data.network.models.Replies;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,42 +24,42 @@ public class MovieRepository {
     CommentManager commentManager;
     PostersManager postersManager;
     RepliesManager repliesManager;
-
-    moviesDB moviesDBInstance;
-
+    static moviesDB moviesDBInstance;
     Context context;
 
-    public MovieRepository getInstance(Context context) {
+    public static MovieRepository getInstance(Context context) {
         moviesDBInstance.getInstance(context);
-        return new MovieRepository(context);
+        return new MovieRepository();
     }
 
-    MovieRepository(Context context) {
-        this.context = context;
-    }
+    public MutableLiveData<List<PosterResults.Posters>> listMutableLiveData = new MutableLiveData<List<PosterResults.Posters>>() {
+    };
 
-    public List<Posters> getAllPosters() {
 
-        List<Posters> all_poster = new ArrayList<>();
-        postersManager.Posters(context).enqueue(new Callback<List<Posters>>() {
+    public LiveData<List<PosterResults.Posters>> getAllPosters() {
+        postersManager = new PostersManager();
+        postersManager.Posters().enqueue(new Callback<PosterResults>() {
             @Override
-            public void onResponse(Call<List<Posters>> call, Response<List<Posters>> response) {
+            public void onResponse(Call<PosterResults> call, Response<PosterResults> response) {
                 if (response.code() >= 200 && response.code() < 300) {
                     if (response.body() != null) {
-                        if (response.body().size() > 0) {
+                        if (response.body().getAllPosters().size() > 0) {
+                            listMutableLiveData.setValue(response.body().getAllPosters());
                         }
                     }
+                } else {
+                    listMutableLiveData.setValue(null);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Posters>> call, Throwable t) {
+            public void onFailure(Call<PosterResults> call, Throwable t) {
 
                 t.printStackTrace();
             }
         });
 
-        return all_poster;
+        return listMutableLiveData;
     }
 
     public List<Comments> getAllComments(int poster_id) {
@@ -68,7 +73,7 @@ public class MovieRepository {
                     if (response.body() != null) {
                         if (response.body().size() > 0) {
                             all_comments.addAll(response.body());
-                           // moviesDBInstance.commentsDAOInstance().insertComments(response.body());
+                            // moviesDBInstance.commentsDAOInstance().insertComments(response.body());
                         }
                     }
                 }
@@ -94,7 +99,7 @@ public class MovieRepository {
                     if (response.body() != null) {
                         if (response.body().size() > 0) {
                             all_replies.addAll(response.body());
-                         //   moviesDBInstance.repliesDAOInstance().insertReplies(response.body());
+                            //   moviesDBInstance.repliesDAOInstance().insertReplies(response.body());
                         }
                     }
                 }
