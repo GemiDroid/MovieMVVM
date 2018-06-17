@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.gemi_droid.intcoretask.R;
 import com.gemi_droid.intcoretask.data.network.models.PosterResults;
@@ -49,10 +50,17 @@ public class MoviesActivity extends AppCompatActivity {
 
                     postersAdapter = new PostersAdapter(context, postersList);
                     rec_posters.setAdapter(postersAdapter);
-                    prog_poster.setVisibility(View.GONE);
                 }
+                else {
+                    Toast.makeText(context, context.getString(R.string.no_internet), Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
+
+        prog_poster.setVisibility(View.GONE);
+
     }
 
     private void initViewModel(Context context) {

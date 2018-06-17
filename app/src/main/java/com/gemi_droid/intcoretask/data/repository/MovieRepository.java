@@ -55,6 +55,7 @@ public class MovieRepository {
             @Override
             public void onFailure(Call<PosterResults> call, Throwable t) {
 
+                listMutableLiveData.setValue(null);
                 t.printStackTrace();
             }
         });
